@@ -9,18 +9,20 @@ pageContainer.appendChild(punchlineText);
 jokeBtn.before(punchlineText);
 
 
+// Generate random Joke from API
+let randJokeGenerator = () => {
+  fetch("https://official-joke-api.appspot.com/random_joke")
+    .then((response) => response.json())
+    .then((data) => {
+      jokeContainer.innerText = data.setup;
+      punchlineText.innerText = " ";
+      setTimeout(() => {
+        punchlineText.innerText = `- ${data.punchline} 😂`;
+      }, 3000);
+    });
+}
 
-jokeBtn.addEventListener("click", function(){
+jokeBtn.addEventListener("click", randJokeGenerator);
 
-  // Fetch joke from API
- fetch("https://official-joke-api.appspot.com/random_joke")
-  .then((response) => response.json())
-  .then((data) => {
-    jokeContainer.innerText  = data.setup;
-    punchlineText.innerText = " ";
-    setTimeout(() => {
-      punchlineText.innerText = `-${data.punchline} 😂`;
-    }, 3000);
-  });
 
-});
+randJokeGenerator();
